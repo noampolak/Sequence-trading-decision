@@ -4,3 +4,7 @@
 #fit the model
 #run the model on the test set
 #download updated data and test the model on them
+from settings import base_settings
+from preprocess_data_files import loadcsvfile
+
+loadcsvfile.load_all_csv_files_in_path(base_settings.HISTORY_INDEX_PATH)

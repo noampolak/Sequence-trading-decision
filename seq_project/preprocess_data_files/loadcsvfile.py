@@ -8,10 +8,10 @@ def load_file_to_csv(path):
     return df
 
 # load all the files in dir path - return list of data frames from the files beening loaded
-def load_all_csv_files_in_path(dir_path):
+def load_all_csv_files_in_path(path):
     # get all files in dir_Path which are in csv format 
     extension = 'csv'
-    os.chdir(dir_path)
+    os.chdir(path)
     file_names = glob.glob('*.{}'.format(extension))
     # list_df = [load_file_to_csv()]
     # return list_df
