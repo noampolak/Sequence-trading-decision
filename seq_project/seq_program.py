@@ -1,4 +1,3 @@
-# loading all data files to memory as matrix
 # build and calc the label data - 1 for buy/sell for nothing
 # split the data to lots of timeframes - dev and test for fiting the model
 #fit the model
@@ -7,4 +6,6 @@
 from settings import base_settings
 from preprocess_data_files import loadcsvfile
 
-loadcsvfile.load_all_csv_files_in_path(base_settings.HISTORY_INDEX_PATH)
+# loading all data files to memory as matrix
+
+files_df = loadcsvfile.load_all_csv_files_in_path(base_settings.HISTORY_INDEX_PATH)
