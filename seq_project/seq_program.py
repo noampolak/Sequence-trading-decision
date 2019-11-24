@@ -9,3 +9,4 @@ from preprocess_data_files import loadcsvfile
 # loading all data files to memory as matrix
 
 files_df = loadcsvfile.load_all_csv_files_in_path(base_settings.HISTORY_INDEX_PATH)
+merged_data_frame = loadcsvfile.merge_all_data_frames_by_date_field(files_df)
