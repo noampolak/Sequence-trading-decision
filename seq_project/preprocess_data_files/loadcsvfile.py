@@ -28,3 +28,16 @@ def merge_all_data_frames_by_date_field(list_of_data_frames):
     return merged_frame
 def fix_missing_data(data_frame):
     data_frame.fillna(0)
+def convert_column_to_float(df,col_num):
+    print(col_num)
+    print(df.ix[:,col_num])
+    if df.ix[:,col_num].str.contains('%').any():
+        print("remove %")
+        return df.ix[:,col_num].str.rstrip('%').astype('float') / 100.0
+    
+    # elif df.ix[:,col_num].str.contains(',').any():
+    #     print("remove ,")
+    #     return df.ix[:,col_num].str.rstrip(',').astype('float')
+    print("convert to float")
+    # return df.ix[:,col_num].astype('float')
+    return pandas.to_numeric(df.ix[:,col_num], errors='coerce')

@@ -1,4 +1,5 @@
 import pandas
+from preprocess_data_files.loadcsvfile import convert_column_to_float
 
 def rolling_mv(df_col,moving_average):
     return df_col.rolling(moving_average).sum()
@@ -12,7 +13,12 @@ def add_moving_average_to_data_frame(df, moving_average, col_num, mv_type='movin
     'ewm' : ewm_mv
     }
     func = moving_average_types.get(mv_type, lambda: "Invalid type")
-    mv_col = func(df.ix[:,col_num], moving_average)
+    try:
+        mv_col = func(df.ix[:,col_num], moving_average)
+    except:
+        df.ix[:,col_num] = convert_column_to_float(df, col_num)
+        mv_col = func(df.ix[:,col_num], moving_average)
+
     df.insert(len(df.columns), "{}{}{}".format(col_num,mv_type,moving_average), mv_col)
     return df
 
