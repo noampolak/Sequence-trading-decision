@@ -14,21 +14,26 @@ def add_moving_average_to_data_frame(df, moving_average, col_num, mv_type='movin
     }
     func = moving_average_types.get(mv_type, lambda: "Invalid type")
     try:
-        mv_col = func(df.ix[:,col_num], moving_average)
+        mv_col = func(df.iloc[:,col_num], moving_average)
     except:
-        df.ix[:,col_num] = convert_column_to_float(df, col_num)
-        mv_col = func(df.ix[:,col_num], moving_average)
-
+        df.iloc[:,col_num] = convert_column_to_float(df, col_num)
+        mv_col = func(df.iloc[:,col_num], moving_average)
+    print(len(df.columns))
     df.insert(len(df.columns), "{}{}{}".format(col_num,mv_type,moving_average), mv_col)
-    return df
+    
+    
 
 def add_list_of_moving_average_to_data_frame(df, moving_average_list):
     df_len = len(df.columns)
+    print('df before adding is:',df)
     for col in range(1,df_len):
         for moving_average in moving_average_list: 
             print('col=', col)
             print('moving_average=', moving_average)
-            df = add_moving_average_to_data_frame(df, moving_average, col, 'moving_average')
-            df = add_moving_average_to_data_frame(df, moving_average, col, 'ewm')
-
+            try:
+                add_moving_average_to_data_frame(df, moving_average, col, 'moving_average')
+                add_moving_average_to_data_frame(df, moving_average, col, 'ewm')
+            except:
+                print('not able to convert column' , col)
+    print('df after adding is:',df)
     return df

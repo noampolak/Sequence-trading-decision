@@ -30,14 +30,14 @@ def fix_missing_data(data_frame):
     data_frame.fillna(0)
 def convert_column_to_float(df,col_num):
     print(col_num)
-    print(df.ix[:,col_num])
-    if df.ix[:,col_num].str.contains('%').any():
+    print(df.iloc[:,col_num])
+    if df.iloc[:,col_num].str.contains('%').any():
         print("remove %")
-        return df.ix[:,col_num].str.rstrip('%').astype('float') / 100.0
-    
-    # elif df.ix[:,col_num].str.contains(',').any():
-    #     print("remove ,")
-    #     return df.ix[:,col_num].str.rstrip(',').astype('float')
-    print("convert to float")
-    # return df.ix[:,col_num].astype('float')
-    return pandas.to_numeric(df.ix[:,col_num], errors='coerce')
+        return df.iloc[:,col_num].str.rstrip('%').astype('float') / 100.0
+    if df.iloc[:,col_num].str.contains(',').any():
+        print("convert to float")
+        print(df.iloc[:,col_num].str.rstrip(','))
+        return df.iloc[:,col_num].str.rstrip(',').astype('float') / 100.0
+    print('df.iloc[:,col_num]: ',df.iloc[:,col_num])
+    return df.iloc[:, col_num].apply(pandas.to_numeric)
+    # return pandas.to_numeric(df.iloc[:,col_num], errors='coerce')
