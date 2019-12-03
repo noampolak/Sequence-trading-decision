@@ -4,7 +4,7 @@
 #run the model on the test set
 #download updated data and test the model on them
 from settings import base_settings
-from preprocess_data_files import loadcsvfile, moving_average
+from preprocess_data_files import loadcsvfile, moving_average, deltas
 
 # loading all data files to memory as matrix
 
@@ -19,3 +19,6 @@ merged_data_frame_plus_MA = moving_average.add_list_of_moving_average_to_data_fr
 print("merged_data_frame_plus_MA columns is: ",len(merged_data_frame_plus_MA.columns))
 # second output - data with moving averages in csv file
 merged_data_frame_plus_MA.to_csv("{}/merged_data_frame_plus_MA.csv".format(base_settings.OUTPUTS_PATH))
+deltas_list = [1,3,5,10,20,30,50,100,200]
+merged_data_frame_plus_MA_plus_Deltas = deltas.add_list_of_deltas_to_data_frame(merged_data_frame_plus_MA, deltas_list)
+merged_data_frame_plus_MA_plus_Deltas.to_csv("{}/merged_data_frame_plus_MA_plus_Deltas.csv".format(base_settings.OUTPUTS_PATH))
