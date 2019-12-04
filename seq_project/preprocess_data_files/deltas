@@ -1,7 +1,0 @@
-import pandas
-
-def add_delta_to_data_frame():
-    pass
-
-def add_list_of_deltas_to_data_frame(df, deltas_list):
-    pass
