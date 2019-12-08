@@ -22,3 +22,5 @@ merged_data_frame_plus_MA.to_csv("{}/merged_data_frame_plus_MA.csv".format(base_
 deltas_list = [1,3,5,10,20,30,50,100,200]
 merged_data_frame_plus_MA_plus_Deltas = deltas.add_list_of_deltas_to_data_frame(merged_data_frame_plus_MA, deltas_list)
 merged_data_frame_plus_MA_plus_Deltas.to_csv("{}/merged_data_frame_plus_MA_plus_Deltas.csv".format(base_settings.OUTPUTS_PATH))
+# generate the Y - labeled data when 1 == buy/sell and 0 == do nothing
+ 
