@@ -1,14 +1,17 @@
-def findLongY(capLeverage, wantedYield, yieldArray):
-    posY_interval = zeros(rows(yieldArray),1)
+import numpy as np
+import pandas as pd
+from helpers.yieldcalc import yieldcalc
 
+def find_long_Y(capLeverage, wantedYield, yieldArray):
+    posY_interval = np.zeros((yieldArray.shape[0],1))
+    yieldArray = yieldArray.to_numpy()
 #   start with the second
-  
     basecap = 1
     local_pos_cap = basecap
-    len_array = length(yieldArray)
+    len_array = yieldArray.shape[0] -1
     i_lead = 1
     i_leg = 1
-    local_pos_cap *= (1 + yieldArray(i_lead))
+    local_pos_cap *= (1 + yieldArray[i_lead])
     while i_lead < len_array:
 #   there are 5 possible actions - yield cause an absolute loss - intervalIndex = 0
 #  pos cap reaches wanted yield - intervalIndex = 1 and the leg increase by 1 and - 
@@ -23,10 +26,11 @@ def findLongY(capLeverage, wantedYield, yieldArray):
             local_pos_cap = basecap
    
         if (local_pos_cap > basecap * (1+ wantedYield/capLeverage)):
-            posY_interval(i_leg) = 1
+            posY_interval[i_leg] = 1
             i_leg = i_leg + 1
             local_pos_cap = basecap * (1 + yieldcalc(yieldArray,i_leg,i_lead))
             # adjust local_pos_cap and local_neg_cap
         else:
             i_lead = i_lead + 1
-            local_pos_cap *= (1 + yieldArray(i_lead))
+            local_pos_cap *= (1 + yieldArray[i_lead])
+    return posY_interval
