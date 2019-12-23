@@ -16,6 +16,6 @@ def Y_date_and_ind(y_file, wanted_yield=0.1, capLeverage=5):
   print('yieldArray=',yieldArray)
   print('df.iloc[:,0].to_numpy()=',df.iloc[:,0].dt.strftime("%Y%m%d").astype(int).to_numpy())
   Y = np.append(df.iloc[:,0].dt.strftime("%Y%m%d").astype(int).to_numpy(), yieldArray)
-  Y = Y.reshape((rows_num,2))
+  Y = Y.reshape(2,rows_num).transpose()
   print('Y=' ,Y)
   return Y

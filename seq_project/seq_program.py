@@ -5,6 +5,8 @@
 #download updated data and test the model on them
 from settings import base_settings
 from preprocess_data_files import loadcsvfile, moving_average, deltas, calcY
+import numpy as np
+
 
 # loading all data files to memory as matrix
 
