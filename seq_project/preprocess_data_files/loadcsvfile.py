@@ -1,6 +1,7 @@
 import os
 import glob
 import pandas
+from helpers import clean_number
 # load scv file and concat all of them
 
 def load_file_to_csv(path):
@@ -32,13 +33,15 @@ def fix_missing_data(data_frame):
     data_frame.fillna(0)
 
 def convert_column_to_float(df,col_num):
-    if df.iloc[:,col_num].str.contains('%').any():
-        print("remove %")
-        return df.iloc[:,col_num].str.rstrip('%').astype('float') / 100.0
-    if df.iloc[:,col_num].str.contains(',').any():
-        print("convert to float")
-        return df.iloc[:,col_num].str.rstrip(',').astype('float') / 100.0
-    return df.iloc[:, col_num].apply(pandas.to_numeric)
+    # return df.iloc[:,col_num].apply(clean_number.clean_number).astype('float')
+    return df.iloc[:,col_num].str.replace('$', '').str.replace(',', '').str.replace('K', '').str.replace('M', '').str.replace('%', '').astype('float')
+    # if df.iloc[:,col_num].str.contains('%').any():
+    #     print("remove %")
+    #     return df.iloc[:,col_num].str.rstrip('%').astype('float') / 100.0
+    # if df.iloc[:,col_num].str.contains(',').any():
+    #     print("convert to float")
+    #     return df.iloc[:,col_num].str.rstrip(',').astype('float')
+    # return df.iloc[:, col_num].apply(pandas.to_numeric)
     # return pandas.to_numeric(df.iloc[:,col_num], errors='coerce')
 
 def convert_date_to_number(df_column):

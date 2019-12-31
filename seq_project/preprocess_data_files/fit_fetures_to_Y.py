@@ -1,6 +1,6 @@
 import numpy as np
 
-def adjust_dates_of_fetures_and_Y_matrix(fetures_matrix, Y_matrix, first_row_to_delete):
+def adjust_dates_of_fetures_and_Y_matrix(fetures_matrix, Y_matrix, first_rows_to_delete):
     # first sort the 2 matrix for easy search
     fetures_matrix = fetures_matrix[fetures_matrix[:,0].argsort()]
     Y_matrix = Y_matrix[Y_matrix[:,0].argsort()]
@@ -27,8 +27,8 @@ def adjust_dates_of_fetures_and_Y_matrix(fetures_matrix, Y_matrix, first_row_to_
     mask = np.zeros(Y_matrix.shape[0],dtype=bool)
     mask[np.searchsorted(Y_matrix[:,0], fetures_matrix[:,0])] = 1
     Y_matrix = Y_matrix[mask]
-    fetures_matrix = fetures_matrix[first_row_to_delete:,:]
-    Y_matrix = Y_matrix[first_row_to_delete:,:]
+    fetures_matrix = fetures_matrix[first_rows_to_delete:,:]
+    Y_matrix = Y_matrix[first_rows_to_delete:,:]
     print('fetures_matrix are ready to use')
     return fetures_matrix, Y_matrix
             

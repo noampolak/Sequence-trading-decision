@@ -34,6 +34,7 @@ def add_list_of_moving_average_to_data_frame(df, moving_average_list):
                 add_moving_average_to_data_frame(df, moving_average, col, 'moving_average')
                 add_moving_average_to_data_frame(df, moving_average, col, 'ewm')
             except:
-                print('not able to convert column' , col)
+                print('not able to convert column - set to 0' , col)
+                df.iloc[:,col] = 0
     print('df after adding is:',df)
     return df

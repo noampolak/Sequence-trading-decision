@@ -9,7 +9,7 @@ def Y_date_and_ind(y_file, wanted_yield=0.1, capLeverage=5):
   # and last is the yield
   # we now convert the yield
   df.iloc[:,-1] = loadcsvfile.convert_column_to_float(df, df.shape[1] -1).to_frame()
-  df.iloc[:,-1] = df.iloc[:,-1] * 100
+  df.iloc[:,-1] = df.iloc[:,-1] 
   df = df.sort_values(by=df.columns[0])
   rows_num = df.shape[0]
   print('df.iloc[:,-1]= ', df.iloc[:,-1])
