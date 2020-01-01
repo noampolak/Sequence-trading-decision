@@ -42,8 +42,8 @@ np.savetxt("{}/Y_matrix_sorted.csv".format(base_settings.OUTPUTS_PATH), Y_matrix
 # split the model to dev and test set
 X_dev, X_test, Y_dev, Y_test = split_data.split_to_dev_and_test(matrix_fetures_sorted, Y_matrix_sorted, base_settings.TEST_SET_SIZE)
 # for Recurrent neural network it is needed to take all the dev data and split him to bulk of 200 for examples
-X_dev_bulked, Y_dev_bulked= split_data.create_bulk_matrix(X_dev, Y_dev, base_settings.FIRST_ROWS_TO_DELETE)
-np.savetxt("{}/Y_dev_bulked.csv".format(base_settings.OUTPUTS_PATH), Y_dev_bulked, delimiter=",")
+X_dev_bulked , Y_dev = split_data.create_bulk_matrix(X_dev, Y_dev, base_settings.FIRST_ROWS_TO_DELETE)
+np.savetxt("{}/Y_dev_bulked.csv".format(base_settings.OUTPUTS_PATH), Y_dev, delimiter=",")
 
 # build the sequence model
 
