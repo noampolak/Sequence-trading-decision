@@ -22,22 +22,22 @@ def trade_dec_model(input_shape):
     
     
     # Propagate features through your batch_layer, you get back the data Normalized 
-    batch_layer = BatchNormalization()(features)
-    
+    # batch_layer = BatchNormalization()(features)
+    batch_layer = features
     # Propagate the embeddings through an LSTM layer with 128-dimensional hidden state
     # Be careful, the returned output should be a batch of sequences.
     X = LSTM(128, return_sequences=True)(batch_layer)
     # Add dropout with a probability of 0.5
-    X = Dropout(0.5)(X)
+    X = Dropout(0.2)(X)
     # Propagate X trough another LSTM layer with 128-dimensional hidden state
     # Be careful, the returned output should be a single hidden state, not a batch of sequences.
     X = LSTM(128,return_sequences=False)(X)
     # Add dropout with a probability of 0.5
-    X = Dropout(0.5)(X)
+    X = Dropout(0.2)(X)
     # Propagate X through a Dense layer with softmax activation to get back a batch of 5-dimensional vectors.
-    X = Dense(5,activation='softmax')(X)
+    X = Dense(1,activation='sigmoid')(X)
     # Add a softmax activation
-    X = Activation('softmax')(X)
+    # X = Activation('sigmoid')(X)
     
     # Create Model instance which Normalize features into X.
     model = Model(inputs=[features],outputs=X)

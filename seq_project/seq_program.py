@@ -6,6 +6,7 @@
 from settings import base_settings
 from preprocess_data_files import loadcsvfile, moving_average, deltas, calcY, fit_fetures_to_Y, split_data
 from helpers import df_to_matrix
+from sequence_model import main_kera
 import numpy as np
 
 
@@ -46,6 +47,12 @@ X_dev_bulked , Y_dev = split_data.create_bulk_matrix(X_dev, Y_dev, base_settings
 np.savetxt("{}/Y_dev_bulked.csv".format(base_settings.OUTPUTS_PATH), Y_dev, delimiter=",")
 
 # build the sequence model
-
-# train
+model = main_kera.build_model(X_dev_bulked, Y_dev, None)
 # analizing
+main_kera.analize_model(model)
+# compile_model
+main_kera.compile_model(model,'binary_crossentropy' , 'adam', ['accuracy'])
+# train
+main_kera.fit_model(model, X_dev_bulked, Y_dev, 15, 32, True)
+# validate
+main_kera.evaluate_model(model, X_test, Y_test)

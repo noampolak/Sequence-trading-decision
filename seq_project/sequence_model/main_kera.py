@@ -1,5 +1,5 @@
 import numpy as np
-from trade_models import trade_dec_model
+from .trade_models import trade_dec_model
 from keras.models import Model
 from keras.layers import Dense, Input, Dropout, LSTM, Activation
 from keras.layers.embeddings import Embedding
@@ -7,7 +7,8 @@ from keras.preprocessing import sequence
 from keras.initializers import glorot_uniform
 
 def build_model(X, Y, model_type):
-    data_shape = X.shape
+    data_shape = (X.shape)[-2:]
+    print('data_shape = ' , data_shape)
     model = trade_dec_model(data_shape)
     return model
 
