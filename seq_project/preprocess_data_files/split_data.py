@@ -1,7 +1,7 @@
 import numpy as np
 
 def split_to_dev_and_test(X, Y, test_size):
-    return X[:-test_size, :], X[test_size:, :], Y[:-test_size, :], Y[test_size:, :]
+    return X[:X.shape[0]-test_size, :,:], X[X.shape[0]-test_size:, :,:], Y[:Y.shape[0]-test_size], Y[Y.shape[0]-test_size:]
 
 # for Recurrent neural network it is needed to take all the dev data and split him to bulk of 200 for examples
 def create_bulk_matrix(X, Y, bulk):

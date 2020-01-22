@@ -14,14 +14,18 @@ def build_model(X, Y, model_type):
 
 def analize_model(model):
     model.summary()
-def compile_model(model, loss='binary_crossentropy' , optimizer='adam',metrics=['accuracy']): 
+def compile_model(model, loss='binary_crossentropy' , optimizer='adam',metrics=['binary_accuracy','mean_squared_error', 'mean_absolute_error', 'mean_absolute_percentage_error', 'cosine_proximity']): 
     model.compile(loss=loss, optimizer=optimizer, metrics=metrics)
 
 
 def fit_model(model, X, Y, epochs =50, batch_size =32, shuffle=True):
     model.fit(X, Y, epochs = epochs, batch_size = batch_size, shuffle=shuffle)
 
-def evaluate_model(model, X_test, Y_test):
-    loss, acc = model.evaluate(X_test, Y_test)
-    print("Test loss = ", loss)
-    print("Test accuracy = ", acc)
+def evaluate_model(model, X_test, Y_test, batch_size =32, callbacks=['BaseLogger']):
+    print("X_test shape  = ", X_test.shape)
+    print("Y_test shape  = ", Y_test.shape)
+    score = model.evaluate(X_test, Y_test, batch_size)
+    print("Test score = ", score)
+    
+def predict_model(model, X_test):
+    return model.predict(X_test)

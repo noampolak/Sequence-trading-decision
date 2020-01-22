@@ -40,19 +40,27 @@ matrix_fetures = df_to_matrix.convert_df_to_matrix(fetures_only_numbers)
 matrix_fetures_sorted, Y_matrix_sorted = fit_fetures_to_Y.adjust_dates_of_fetures_and_Y_matrix(matrix_fetures, Y, base_settings.FIRST_ROWS_TO_DELETE)
 # np.savetxt("{}/matrix_fetures_sorted.csv".format(base_settings.OUTPUTS_PATH), matrix_fetures_sorted, delimiter=",")
 np.savetxt("{}/Y_matrix_sorted.csv".format(base_settings.OUTPUTS_PATH), Y_matrix_sorted, delimiter=",")
-# split the model to dev and test set
-X_dev, X_test, Y_dev, Y_test = split_data.split_to_dev_and_test(matrix_fetures_sorted, Y_matrix_sorted, base_settings.TEST_SET_SIZE)
 # for Recurrent neural network it is needed to take all the dev data and split him to bulk of 200 for examples
-X_dev_bulked , Y_dev = split_data.create_bulk_matrix(X_dev, Y_dev, base_settings.FIRST_ROWS_TO_DELETE)
+X , Y = split_data.create_bulk_matrix(matrix_fetures_sorted, Y_matrix_sorted, base_settings.FIRST_ROWS_TO_DELETE)
+# split the model to dev and test set
+print('X.shape= ',X.shape, 'Y.shape= ',Y.shape)
+
+X_dev, X_test, Y_dev, Y_test = split_data.split_to_dev_and_test(X, Y, base_settings.TEST_SET_SIZE)
+print('X_dev.shape= ',X_dev.shape, 'X_test.shape= ',X_test.shape, 'Y_dev.shape= ', Y_dev.shape, 'Y_test.shape= ', Y_test.shape)
 np.savetxt("{}/Y_dev_bulked.csv".format(base_settings.OUTPUTS_PATH), Y_dev, delimiter=",")
 
 # build the sequence model
-model = main_kera.build_model(X_dev_bulked, Y_dev, None)
+model = main_kera.build_model(X_dev, Y_dev, None)
 # analizing
 main_kera.analize_model(model)
 # compile_model
-main_kera.compile_model(model,'binary_crossentropy' , 'adam', ['accuracy'])
+main_kera.compile_model(model,'binary_crossentropy' , 'adam', ['binary_accuracy','mean_squared_error', 'mean_absolute_error', 'mean_absolute_percentage_error', 'cosine_proximity'])
 # train
-main_kera.fit_model(model, X_dev_bulked, Y_dev, 15, 32, True)
+main_kera.fit_model(model, X_dev, Y_dev, base_settings.EPOCH, base_settings.BATCH_SIZE, True)
 # validate
 main_kera.evaluate_model(model, X_test, Y_test)
+# create prediction file
+y_pred = main_kera.predict_model(model, X_test)
+np.savetxt("{}/Y_prediction.csv".format(base_settings.OUTPUTS_PATH), y_pred, delimiter=",")
+np.savetxt("{}/Y_real.csv".format(base_settings.OUTPUTS_PATH), Y_test, delimiter=",")
+
