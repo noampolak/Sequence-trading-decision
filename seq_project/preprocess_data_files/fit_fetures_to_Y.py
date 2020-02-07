@@ -1,4 +1,5 @@
 import numpy as np
+from settings import base_settings
 
 def adjust_dates_of_fetures_and_Y_matrix(fetures_matrix, Y_matrix, first_rows_to_delete):
     # first sort the 2 matrix for easy search
@@ -24,6 +25,9 @@ def adjust_dates_of_fetures_and_Y_matrix(fetures_matrix, Y_matrix, first_rows_to
     mask = np.zeros(fetures_matrix.shape[0],dtype=bool)
     mask[np.searchsorted(fetures_matrix[:,0], Y_matrix[:,0])] = 1
     fetures_matrix = fetures_matrix[mask]
+    # delete rows where most of data are missing via start date
+    rows_with_missing_values = np.argwhere(fetures_matrix==base_settings.START_DATE)[0]
+    fetures_matrix = fetures_matrix[rows_with_missing_values[0]:,:]
     mask = np.zeros(Y_matrix.shape[0],dtype=bool)
     mask[np.searchsorted(Y_matrix[:,0], fetures_matrix[:,0])] = 1
     Y_matrix = Y_matrix[mask]

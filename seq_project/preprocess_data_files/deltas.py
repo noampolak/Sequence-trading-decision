@@ -3,7 +3,7 @@ from preprocess_data_files.loadcsvfile import convert_column_to_float
 
 
 def simple_delta(df_col,delta):
-    return df_col.diff().shift(-delta)
+    return -df_col.diff(periods=delta)
 
 def add_delta_to_data_frame(df, delta, col_num, mv_type='simple_delta'):
     delta_types = {

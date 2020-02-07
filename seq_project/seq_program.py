@@ -21,14 +21,14 @@ print("merged_data_frame columns is: ",len(merged_data_frame.columns))
 # first output - the merged data frame in csv file
 # merged_data_frame.to_csv("{}/merged_data_frame.csv".format(base_settings.OUTPUTS_PATH))
 # create more fetures - moving averages and deltas
-# moving_average_list = [3,5,10,20,30,50,100,200]
-moving_average_list = [5,20]
+moving_average_list = [3,5,10,20,30,50,100,200]
+# moving_average_list = [5]
 merged_data_frame_plus_MA = moving_average.add_list_of_moving_average_to_data_frame(merged_data_frame, moving_average_list)
 print("merged_data_frame_plus_MA columns is: ",len(merged_data_frame_plus_MA.columns))
 # second output - data with moving averages in csv file
 merged_data_frame_plus_MA.to_csv("{}/merged_data_frame_plus_MA.csv".format(base_settings.OUTPUTS_PATH))
-# deltas_list = [1,3,5,10,20,30,50,100,200]
-deltas_list = [1]
+deltas_list = [1,3,5,10,20,30,50,100,200]
+# deltas_list = [1]
 
 merged_data_frame_plus_MA_plus_Deltas = deltas.add_list_of_deltas_to_data_frame(merged_data_frame_plus_MA, deltas_list)
 merged_data_frame_plus_MA_plus_Deltas.to_csv("{}/merged_data_frame_plus_MA_plus_Deltas.csv".format(base_settings.OUTPUTS_PATH))

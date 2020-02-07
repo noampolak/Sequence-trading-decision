@@ -14,5 +14,5 @@ BATCH_SIZE = 128
 # first date to exam
 START_DATE = 20061010
 CLASS_WEIGHT = {0: 1.,
-                1: 10.,
-                2: 9.}
+                1: 9.,
+                2: 12.}

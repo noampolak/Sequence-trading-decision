@@ -27,7 +27,7 @@ def merge_all_data_frames_by_date_field(list_of_data_frames):
     for df in list_of_data_frames:
         merged_frame = pandas.merge_ordered(merged_frame, df, fill_method='ffill', on='Date',how='outer')
         # merged_frame = pandas.merge_ordered(merged_frame, df, on='Date',how='outer')
-    return merged_frame
+    return merged_frame.sort_values('Date')
 
 def fix_missing_data(data_frame):
     data_frame.fillna(0)

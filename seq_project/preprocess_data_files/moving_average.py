@@ -2,7 +2,7 @@ import pandas
 from preprocess_data_files.loadcsvfile import convert_column_to_float
 
 def rolling_mv(df_col,moving_average):
-    return df_col.rolling(moving_average).sum()
+    return df_col.rolling(moving_average).mean()
 def ewm_mv(df_col,moving_average):
     return df_col.ewm(span=moving_average).mean()
 
