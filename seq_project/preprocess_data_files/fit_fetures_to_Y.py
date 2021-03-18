@@ -1,10 +1,11 @@
 import numpy as np
 from settings import base_settings
 
-def adjust_dates_of_fetures_and_Y_matrix(fetures_matrix, Y_matrix, first_rows_to_delete):
+def adjust_dates_of_fetures_and_Y_matrix(fetures_matrix, Y_matrix, Y_for_predictions, first_rows_to_delete):
     # first sort the 2 matrix for easy search
     fetures_matrix = fetures_matrix[fetures_matrix[:,0].argsort()]
     Y_matrix = Y_matrix[Y_matrix[:,0].argsort()]
+    Y_for_predictions = Y_for_predictions[Y_for_predictions[:,0].argsort()]
     # run effciently on the matrix and remove the uniqe values
     # i  = 0
     # try:
@@ -31,9 +32,11 @@ def adjust_dates_of_fetures_and_Y_matrix(fetures_matrix, Y_matrix, first_rows_to
     mask = np.zeros(Y_matrix.shape[0],dtype=bool)
     mask[np.searchsorted(Y_matrix[:,0], fetures_matrix[:,0])] = 1
     Y_matrix = Y_matrix[mask]
+    Y_for_predictions = Y_for_predictions[mask]
     fetures_matrix = fetures_matrix[first_rows_to_delete:,:]
     Y_matrix = Y_matrix[first_rows_to_delete:,:]
+    Y_for_predictions = Y_for_predictions[first_rows_to_delete:,:]
     print('fetures_matrix are ready to use')
-    return fetures_matrix, Y_matrix
+    return fetures_matrix, Y_matrix, Y_for_predictions
             
     

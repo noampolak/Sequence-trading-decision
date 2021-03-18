@@ -2,7 +2,7 @@ import os
 import glob
 import pandas
 from helpers import clean_number
-# load scv file and concat all of them
+# load csv file and concat all of them
 
 def load_file_to_csv(path):
     df = pandas.read_csv(path, parse_dates=['Date'])

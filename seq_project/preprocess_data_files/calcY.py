@@ -23,14 +23,16 @@ def Y_date_and_ind(df, wanted_yield=0.1, capLeverage=5):
   print('yieldArray=',yieldArray)
   print('df.iloc[:,0].to_numpy()=',df.iloc[:,0].dt.strftime("%Y%m%d").astype(int).to_numpy())
   Y = np.append(df.iloc[:,0].dt.strftime("%Y%m%d").astype(int).to_numpy(), mixed_y)
+  df.iloc[:,0]  = df.iloc[:,0].dt.strftime("%Y%m%d").astype(int)
+  Y_origin = df.to_numpy()
   Y = Y.reshape(2,rows_num).transpose()
-  return Y
+  return Y, Y_origin
 
 def load_Y_files(Y_files_path, wanted_yield=0.1, capLeverage=5):
   # load the Y files
   df_files = loadcsvfile.load_all_csv_files_in_path(Y_files_path)
   Y_np = np.zeros(())
   for Y_file in df_files:
-    Y_np = Y_date_and_ind(Y_file, wanted_yield, capLeverage)
+    Y_np, Y_origin= Y_date_and_ind(Y_file, wanted_yield, capLeverage)
 
-  return Y_np
+  return Y_np, Y_origin
